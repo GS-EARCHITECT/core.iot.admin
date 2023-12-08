@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import assetsensormaster_mgmt.model.dto.AssetSensorMaster_DTO;
 import assetsensormaster_mgmt.model.master.AssetSensorMaster;
-import assetsensormaster_mgmt.model.master.AssetSensorMasterPK;
 import assetsensormaster_mgmt.model.repo.AssetSensorMastersAdmin_Repo;
 
 @Service("assetSensorMastersAdminServ")
@@ -31,7 +30,7 @@ public class AssetSensorMastersAdmin_Service implements I_AssetSensorMastersAdmi
 		return lMasterss;
 	}
 
-	public ArrayList<AssetSensorMaster_DTO> getSelectAssetSensors(ArrayList<AssetSensorMasterPK> ids) {
+	public ArrayList<AssetSensorMaster_DTO> getSelectAssetSensors(ArrayList<Long> ids) {
 		ArrayList<AssetSensorMaster> lMasters = (ArrayList<AssetSensorMaster>) assetSensorMastersAdminRepo.findAllById(ids);
 		ArrayList<AssetSensorMaster_DTO> assetSensorMaster_DTOs = lMasters != null ? this.getAssetSensorMaster_DTOs(lMasters) : null;
 		return assetSensorMaster_DTOs;
@@ -39,12 +38,9 @@ public class AssetSensorMastersAdmin_Service implements I_AssetSensorMastersAdmi
 	
 	public void updAssetSensor(AssetSensorMaster_DTO lMaster) 
 	{
-		AssetSensorMasterPK assetSensorMasterPK = new AssetSensorMasterPK(); 
-		assetSensorMasterPK.setAssetSeqNo(lMaster.getAssetSeqNo());
-		assetSensorMasterPK.setSensorAssetSeqNo(lMaster.getSensorAssetSeqNo());
 		AssetSensorMaster assetSensorMaster = this.setAssetSensor(lMaster);
 		
-		if (assetSensorMastersAdminRepo.existsById(assetSensorMasterPK)) 
+		if (assetSensorMastersAdminRepo.existsById(lMaster.getSensorAssetSeqNo())) 
 		{
 			assetSensorMastersAdminRepo.save(assetSensorMaster);
 		}
@@ -55,7 +51,7 @@ public class AssetSensorMastersAdmin_Service implements I_AssetSensorMastersAdmi
 		assetSensorMastersAdminRepo.deleteAll();
 	}
 
-	public void delSelectAssetSensors(ArrayList<AssetSensorMasterPK> assetSensorMasterPKs)
+	public void delSelectAssetSensors(ArrayList<Long> assetSensorMasterPKs)
 	{
 		if (assetSensorMasterPKs != null) {
 			assetSensorMastersAdminRepo.deleteAllById(assetSensorMasterPKs);
@@ -72,23 +68,25 @@ public class AssetSensorMastersAdmin_Service implements I_AssetSensorMastersAdmi
 		return lMasterDTOs;
 	}
 
-	private AssetSensorMaster_DTO getAssetSensorMaster_DTO(AssetSensorMaster lMaster) {
+	private AssetSensorMaster_DTO getAssetSensorMaster_DTO(AssetSensorMaster lMaster) 
+	{
 		AssetSensorMaster_DTO lDTO = new AssetSensorMaster_DTO();
-		lDTO.setSensorAssetSeqNo(lMaster.getId().getSensorAssetSeqNo());
-		lDTO.setAssetSeqNo(lMaster.getId().getAssetSeqNo());
+		lDTO.setSensorAssetSeqNo(lMaster.getSensorAssetSeqNo());
+		lDTO.setAssetSeqNo(lMaster.getAssetSeqNo());
 		lDTO.setLocationSeqNo(lMaster.getSensorLocationSeqNo());
-		lDTO.setSensorLocationSeqNo(lMaster.getSensorLocationSeqNo());		
+		lDTO.setSensorLocationSeqNo(lMaster.getSensorLocationSeqNo());
+		lDTO.setResourceSeqNo(lMaster.getResourceSeqNo());
+		lDTO.setSensorResourceSeqNo(lMaster.getSensorResourceSeqNo());
 		return lDTO;
 	}
 
 	private AssetSensorMaster setAssetSensor(AssetSensorMaster_DTO lDTO) {
-		AssetSensorMaster lMaster = new AssetSensorMaster();
-		AssetSensorMasterPK assetSensorMasterPK = new AssetSensorMasterPK(); 
-		assetSensorMasterPK.setAssetSeqNo(lDTO.getAssetSeqNo());
-		assetSensorMasterPK.setSensorAssetSeqNo(lDTO.getSensorAssetSeqNo());
-		lMaster.setId(assetSensorMasterPK);
+		AssetSensorMaster lMaster = new AssetSensorMaster();		 
+		lMaster.setAssetSeqNo(lDTO.getAssetSeqNo());
 		lMaster.setLocationSeqNo(lDTO.getLocationSeqNo());
-		lMaster.setSensorLocationSeqNo(lMaster.getSensorLocationSeqNo());				
+		lMaster.setSensorLocationSeqNo(lDTO.getSensorLocationSeqNo());
+		lMaster.setResourceSeqNo(lDTO.getResourceSeqNo());
+		lMaster.setSensorResourceSeqNo(lDTO.getSensorResourceSeqNo());
 		return lMaster;
 	}
 

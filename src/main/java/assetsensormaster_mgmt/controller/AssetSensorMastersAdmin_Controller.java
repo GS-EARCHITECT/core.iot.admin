@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import assetsensormaster_mgmt.model.dto.AssetSensorMaster_DTO;
-import assetsensormaster_mgmt.model.master.AssetSensorMasterPK;
 import assetsensormaster_mgmt.service.I_AssetSensorMastersAdmin_Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +42,7 @@ public class AssetSensorMastersAdmin_Controller {
 	}
 
 	@GetMapping(value = "/getSelectAssetSensorMasters", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ArrayList<AssetSensorMaster_DTO>> getSelectAssetSensorMasters(@RequestBody ArrayList<AssetSensorMasterPK> aList) 
+	public ResponseEntity<ArrayList<AssetSensorMaster_DTO>> getSelectAssetSensorMasters(@RequestBody ArrayList<Long> aList) 
 	{
 		ArrayList<AssetSensorMaster_DTO> AssetSensorMasterDTOs = assetSensorMastersAdminService.getSelectAssetSensors(aList);
 		return new ResponseEntity<>(AssetSensorMasterDTOs, HttpStatus.OK);
@@ -56,7 +55,7 @@ public class AssetSensorMastersAdmin_Controller {
 	}
 
 	@DeleteMapping("/delSelectAssetSensorMasters")
-	public void deleteSelectAssetSensorMasters(@RequestBody ArrayList<AssetSensorMasterPK> aList) {
+	public void deleteSelectAssetSensorMasters(@RequestBody ArrayList<Long> aList) {
 		assetSensorMastersAdminService.delSelectAssetSensors(aList);
 		return;
 	}

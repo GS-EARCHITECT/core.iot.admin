@@ -12,6 +12,8 @@ public class AssetSensorMaster_DTO implements Serializable {
 	private Long sensorLocationSeqNo;
 	private Long assetSeqNo;
 	private Long sensorAssetSeqNo;
+	private Long sensorResourceSeqNo;
+	private Long resourceSeqNo;
 
 	public Long getLocationSeqNo() {
 		return locationSeqNo;
@@ -45,12 +47,31 @@ public class AssetSensorMaster_DTO implements Serializable {
 		this.sensorAssetSeqNo = sensorAssetSeqNo;
 	}
 
-	public AssetSensorMaster_DTO(Long locationSeqNo, Long sensorLocationSeqNo, Long assetSeqNo, Long sensorAssetSeqNo) {
+	public AssetSensorMaster_DTO(Long locationSeqNo, Long sensorLocationSeqNo, Long assetSeqNo, Long sensorAssetSeqNo,
+			Long sensorResourceSeqNo, Long resourceSeqNo) {
 		super();
 		this.locationSeqNo = locationSeqNo;
 		this.sensorLocationSeqNo = sensorLocationSeqNo;
 		this.assetSeqNo = assetSeqNo;
 		this.sensorAssetSeqNo = sensorAssetSeqNo;
+		this.sensorResourceSeqNo = sensorResourceSeqNo;
+		this.resourceSeqNo = resourceSeqNo;
+	}
+
+	public Long getSensorResourceSeqNo() {
+		return sensorResourceSeqNo;
+	}
+
+	public void setSensorResourceSeqNo(Long sensorResourceSeqNo) {
+		this.sensorResourceSeqNo = sensorResourceSeqNo;
+	}
+
+	public Long getResourceSeqNo() {
+		return resourceSeqNo;
+	}
+
+	public void setResourceSeqNo(Long resourceSeqNo) {
+		this.resourceSeqNo = resourceSeqNo;
 	}
 
 	public AssetSensorMaster_DTO() {
